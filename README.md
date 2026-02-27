@@ -1,6 +1,6 @@
 # MendScript
 
-MendScript is a statically typed, imperative scripting language inspired by the Lua programmin g language. It is designed to be a lightweight, embeddable language implemented in pure C.
+MendScript is a statically typed, imperative scripting language inspired by the Lua programming language. It is designed to be a lightweight, embeddable language implemented in pure C.
 
 ## Core Features
 

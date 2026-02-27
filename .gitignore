@@ -1,0 +1,19 @@
+# MendScript Build Outputs
+*.exe
+*.out
+*.app
+
+# Debug symbols and object files
+*.o
+*.pdb
+*.ilk
+
+# folders
+.vscode/
+build/
+src/build/
+temp/
+
+# OS files
+.DS_Store
+Thumbs.db

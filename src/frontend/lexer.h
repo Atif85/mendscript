@@ -76,9 +76,34 @@ typedef enum {
 typedef struct {
     TokenType type; // TokenType of the token
     const char *lexeme_start; // Pointer to the source string (to avoid malloc) 
-    int lexeme_length; // Length of the lexeme starting from lexeme_start
+    int lexeme_len; // Length of the lexeme starting from lexeme_start
     int line_num; // Line number in source
     int column_num; // Column on the line
 } Token;
+
+// Lexer struct
+typedef struct {
+    // Source code
+    char *soruce;
+    int source_len;
+
+    // Token array
+    Token *tokens;
+    int token_count;
+    int token_capacity;
+
+    // Scanning state
+    int start;
+    int current;
+    int line;
+    int line_start;
+    bool is_at_line_stack;
+
+    // Indent stack
+    int *indent_stack;
+    int indent_depth; // Number of elements in the indet stack
+    int indent_capcity;
+} Lexer;
+
 
 #endif // LEXER_H

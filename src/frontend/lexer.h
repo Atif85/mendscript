@@ -5,7 +5,7 @@
 
 // Dynamic Array Macros
 #define GROW_CAPACITY(capacity) \ 
-    (capacity < 8) ? 8 : ((capacity * 16) / 10) 
+    (capacity < 16) ? 16 : ((capacity * 16) / 10) 
 
 #define GROW_ARRAY(type, pointer, old_count, new_count) \
     (type*)reallocate(pointer, sizeof(type) * (old_count), \
@@ -105,13 +105,23 @@ typedef struct {
     int current;
     int line;
     int line_start;
-    bool is_at_line_stack;
+    bool is_at_line_start;
 
     // Indent stack
     int *indent_stack;
     int indent_depth; // Number of elements in the indet stack
-    int indent_capcity;
+    int indent_capacity;
 } Lexer;
+
+// --- Main fuctions ---
+
+// Create a new lexer for the given source
+Lexer *create_lexer(const char *source);
+
+// Free all the resources allocated by the lexer
+void free_lexer(Lexer *lexer);
+
+// ---  Other helpers ---
 
 // Memory reallocate helper
 void* reallocate(void* pointer, size_t old_size, size_t new_size);

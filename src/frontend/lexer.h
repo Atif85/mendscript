@@ -122,6 +122,9 @@ Lexer *create_lexer(const char *source);
 void free_lexer(Lexer *lexer);
 
 // ---  Other helpers ---
+void lexer_scan_tokens(Lexer *lexer);
+
+
 
 // Memory reallocate helper
 void* reallocate(void* pointer, size_t old_size, size_t new_size);

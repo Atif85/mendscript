@@ -1,18 +1,17 @@
 #include "lexer.h"
-#include <string.h>
-#include <stdbool.h>
-
-#include <stdlib.h> 
-#include <stdio.h> 
 #include <ctype.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void* reallocate(void* pointer, size_t old_size, size_t new_size) {
+void *reallocate(void *pointer, size_t old_size, size_t new_size) {
     if (new_size == 0) {
         free(pointer);
         return NULL;
     }
 
-    void* result = realloc(pointer, new_size);
+    void *result = realloc(pointer, new_size);
     if (result == NULL) exit(1); // Handle out-of-memory
     return result;
 }
@@ -26,7 +25,7 @@ Lexer *create_lexer(const char *source) {
     if (lexer == NULL) return NULL;
 
     // Initializing feilds
-    lexer->soruce = source;
+    lexer->source = source;
     lexer->source_len = strlen(source);
 
     lexer->token_count = 0;
@@ -55,7 +54,7 @@ Lexer *create_lexer(const char *source) {
     lexer->indent_stack[0] = 0;
     lexer->indent_depth = 1;
     lexer->is_at_line_start = true;
-    
+
     return lexer;
 }
 
@@ -71,7 +70,8 @@ void free_lexer(Lexer *lexer) {
 // --- Main scanning logic ---
 
 // Internal helper to add a token and grow the dynamic array if needed.
-static void lexer_emit_token(Lexer *lexer, TokenType type, const char* lexeme_start, int lexeme_len) {
+static void lexer_emit_token(Lexer *lexer, TokenType type, const char *lexeme_start,
+                             int lexeme_len) {
     if (lexer->token_count >= lexer->token_capacity) {
         int old_capacity = lexer->token_capacity;
 
@@ -82,8 +82,8 @@ static void lexer_emit_token(Lexer *lexer, TokenType type, const char* lexeme_st
     Token *token = &lexer->tokens[lexer->token_count];
     token->type = type;
     token->line_num = lexer->line;
-    token->column_num = lexer->current - lexer->line_start + 1; 
-    
+    token->column_num = lexer->current - lexer->line_start + 1;
+
     token->lexeme_start = lexeme_start;
     token->lexeme_len = lexeme_len;
 
@@ -99,14 +99,14 @@ void scan_token(Lexer *lexer) {
 }
 
 void lexer_scan_tokens(Lexer *lexer) {
-    if (!is_at_end(lexer)) {
+    while (!is_at_end(lexer)) {
         lexer->start = lexer->current;
         scan_token(lexer);
     }
 
     // Close any remaining open blocks at the end of the file
     while (lexer->indent_depth > 1) {
-        lexer_emit_token(lexer, TK_DEDENT, lexer->soruce + lexer->current, 0);
+        lexer_emit_token(lexer, TK_DEDENT, lexer->source + lexer->current, 0);
         lexer->indent_depth--;
     }
 

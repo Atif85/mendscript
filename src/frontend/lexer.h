@@ -4,12 +4,10 @@
 #include <stdbool.h>
 
 // Dynamic Array Macros
-#define GROW_CAPACITY(capacity) \ 
-    (capacity < 16) ? 16 : ((capacity * 16) / 10) 
+#define GROW_CAPACITY(capacity) (capacity < 16) ? 16 : ((capacity * 16) / 10)
 
-#define GROW_ARRAY(type, pointer, old_count, new_count) \
-    (type*)reallocate(pointer, sizeof(type) * (old_count), \
-        sizeof(type) * (new_count))
+#define GROW_ARRAY(type, pointer, old_count, new_count)                                            \
+    (type *)reallocate(pointer, sizeof(type) * (old_count), sizeof(type) * (new_count))
 
 // TokenType Enum
 typedef enum {
@@ -36,7 +34,7 @@ typedef enum {
     TK_LESS_EQUAL,
     TK_GREATER,
     TK_GREATER_EQUAL,
-    TK_ARROW,  // ->
+    TK_ARROW, // ->
     TK_PLUS_PLUS,
     TK_MINUS_MINUS,
 
@@ -82,17 +80,17 @@ typedef enum {
 
 // Token struct
 typedef struct {
-    TokenType type; // TokenType of the token
-    const char *lexeme_start; // Pointer to the source string (to avoid malloc) 
-    int lexeme_len; // Length of the lexeme starting from lexeme_start
-    int line_num; // Line number in source
-    int column_num; // Column on the line
+    TokenType type;           // TokenType of the token
+    const char *lexeme_start; // Pointer to the source string (to avoid malloc)
+    int lexeme_len;           // Length of the lexeme starting from lexeme_start
+    int line_num;             // Line number in source
+    int column_num;           // Column on the line
 } Token;
 
 // Lexer struct
 typedef struct {
     // Source code
-    char *soruce;
+    char *source;
     int source_len;
 
     // Token array
@@ -124,9 +122,7 @@ void free_lexer(Lexer *lexer);
 // ---  Other helpers ---
 void lexer_scan_tokens(Lexer *lexer);
 
-
-
 // Memory reallocate helper
-void* reallocate(void* pointer, size_t old_size, size_t new_size);
+void *reallocate(void *pointer, size_t old_size, size_t new_size);
 
 #endif // LEXER_H
